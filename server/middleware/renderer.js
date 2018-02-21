@@ -27,7 +27,7 @@ export default (store) => (req, res, next) => {
             </Loadable.Capture>
         );
         const reduxState = JSON.stringify(store.getState());
-
+        console.log('reduxState', reduxState);
         const extraChunks = extractAssets(manifest, modules)
             .map(c => `<script type="text/javascript" src="/${c}"></script>`);
 
@@ -42,4 +42,5 @@ export default (store) => (req, res, next) => {
             .replace('__SERVER_REDUX_STATE__', reduxState)
         );
     });
+
 }
