@@ -21,6 +21,7 @@ router.use(express.static(
     path.resolve(__dirname,'..', '..', 'build'),
     { maxAge: '30d' },
 ));
-router.use('*', actionIndex);
+
+ router.use('*', actionIndex);
 
 export default router;
