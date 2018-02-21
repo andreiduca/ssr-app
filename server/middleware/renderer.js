@@ -29,15 +29,17 @@ export default (store) => (req, res, next) => {
         const reduxState = JSON.stringify(store.getState());
 
         const extraChunks = extractAssets(manifest, modules)
-        .map(c => `<script type="text/javascript" src="/${c}"></script><script>window.REDUX_STATE = ${reduxState};</script>`);
-            return res.send(
-                htmlData.replace(
-                    '<div id="root"></div>',
-                    `<div id="root">${html}</div>`
-                ).replace(
-                    '</body>',
-                    extraChunks.join('') + '</body>'
-                )
-            );
-        });
+            .map(c => `<script type="text/javascript" src="/${c}"></script>`);
+
+        return res.send(
+            htmlData.replace(
+                '<div id="root"></div>',
+                `<div id="root">${html}</div>`
+            ).replace(
+                '</body>',
+                extraChunks.join('') + '</body>'
+            )
+            .replace('__SERVER_REDUX_STATE__', reduxState)
+        );
+    });
 }
