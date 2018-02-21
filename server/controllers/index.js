@@ -9,7 +9,7 @@ const path = require("path");
 const store = configureStore();
 
 const actionIndex = (req, res, next) => {
-    store.dispatch(setMessage("Hi, I'm from server!"));
+    store.dispatch(setMessage('Hi, Im from server!'));
     serverRenderer(store)(req, res, next);
 };
 
@@ -21,6 +21,7 @@ router.use(express.static(
     path.resolve(__dirname,'..', '..', 'build'),
     { maxAge: '30d' },
 ));
+
  router.use('*', actionIndex);
 
 export default router;

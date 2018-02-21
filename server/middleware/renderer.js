@@ -27,9 +27,9 @@ export default (store) => (req, res, next) => {
             </Loadable.Capture>
         );
         const reduxState = JSON.stringify(store.getState());
-
+        console.log('reduxState', reduxState);
         const extraChunks = extractAssets(manifest, modules)
-        .map(c => `<script type="text/javascript" src="/${c}"></script><script>window.REDUX_STATE = ${reduxState};</script>`);
+        .map(c => `<script type="text/javascript" src="/${c}"></script>`);
             return res.send(
                 htmlData.replace(
                     '<div id="root"></div>',
@@ -37,7 +37,7 @@ export default (store) => (req, res, next) => {
                 ).replace(
                     '</body>',
                     extraChunks.join('') + '</body>'
-                )
+                ).replace('__SERVER_REDUX_STATE__', reduxState)
             );
         });
 }
